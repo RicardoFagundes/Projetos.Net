@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Projetos.netModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Projetos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="dt_Criacao" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Responsavel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Produto" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tarefas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="dt_Cadastro" Type="datetime" Nullable="false" />
+          <Property Name="Imporancia" Type="char" MaxLength="1" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+          <Property Name="ID_Projeto" Type="int" />
+          <Property Name="ID_Responsavel" Type="int" />
+          <Property Name="dt_Ini_Prev" Type="datetime" Nullable="false" />
+          <Property Name="dt_Fim_Prev" Type="datetime" />
+          <Property Name="dt_Ini" Type="datetime" />
+          <Property Name="dt_Fim" Type="datetime" />
+          <Property Name="Obs" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UltimoLogin" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Projetos__UserId__4CA06362">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Projetos" Type="Self.Projetos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Projetos">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tarefas__ID_Proj__5165187F">
+          <End Role="Projetos" Type="Self.Projetos" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tarefas" Type="Self.Tarefas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projetos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tarefas">
+              <PropertyRef Name="ID_Projeto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tarefas__ID_Resp__52593CB8">
+          <End Role="Responsavel" Type="Self.Responsavel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tarefas" Type="Self.Tarefas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsavel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tarefas">
+              <PropertyRef Name="ID_Responsavel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjetosnetModelStoreContainer">
+          <EntitySet Name="Projetos" EntityType="Self.Projetos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Responsavel" EntityType="Self.Responsavel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tarefas" EntityType="Self.Tarefas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Projetos__UserId__4CA06362" Association="Self.FK__Projetos__UserId__4CA06362">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Projetos" EntitySet="Projetos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tarefas__ID_Proj__5165187F" Association="Self.FK__Tarefas__ID_Proj__5165187F">
+            <End Role="Projetos" EntitySet="Projetos" />
+            <End Role="Tarefas" EntitySet="Tarefas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tarefas__ID_Resp__52593CB8" Association="Self.FK__Tarefas__ID_Resp__52593CB8">
+            <End Role="Responsavel" EntitySet="Responsavel" />
+            <End Role="Tarefas" EntitySet="Tarefas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Projetos.netModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Projeto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dt_Criacao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Projetos__UserId__4CA06362" FromRole="Projetos" ToRole="Usuarios" />
+          <NavigationProperty Name="Tarefas" Relationship="Self.FK__Tarefas__ID_Proj__5165187F" FromRole="Projetos" ToRole="Tarefas" />
+        </EntityType>
+        <EntityType Name="Responsavel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Produto" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tarefas" Relationship="Self.FK__Tarefas__ID_Resp__52593CB8" FromRole="Responsavel" ToRole="Tarefas" />
+        </EntityType>
+        <EntityType Name="Tarefa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Titulo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dt_Cadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Imporancia" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ID_Projeto" Type="Int32" />
+          <Property Name="ID_Responsavel" Type="Int32" />
+          <Property Name="dt_Ini_Prev" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dt_Fim_Prev" Type="DateTime" Precision="3" />
+          <Property Name="dt_Ini" Type="DateTime" Precision="3" />
+          <Property Name="dt_Fim" Type="DateTime" Precision="3" />
+          <Property Name="Obs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Projeto" Relationship="Self.FK__Tarefas__ID_Proj__5165187F" FromRole="Tarefas" ToRole="Projetos" />
+          <NavigationProperty Name="Responsavel" Relationship="Self.FK__Tarefas__ID_Resp__52593CB8" FromRole="Tarefas" ToRole="Responsavel" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UltimoLogin" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Projetos" Relationship="Self.FK__Projetos__UserId__4CA06362" FromRole="Usuarios" ToRole="Projetos" />
+        </EntityType>
+        <Association Name="FK__Projetos__UserId__4CA06362">
+          <End Role="Usuarios" Type="Self.Usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Projetos" Type="Self.Projeto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Projetos">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tarefas__ID_Proj__5165187F">
+          <End Role="Projetos" Type="Self.Projeto" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tarefas" Type="Self.Tarefa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projetos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tarefas">
+              <PropertyRef Name="ID_Projeto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tarefas__ID_Resp__52593CB8">
+          <End Role="Responsavel" Type="Self.Responsavel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tarefas" Type="Self.Tarefa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsavel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tarefas">
+              <PropertyRef Name="ID_Responsavel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Projetos" EntityType="Self.Projeto" />
+          <EntitySet Name="Responsavels" EntityType="Self.Responsavel" />
+          <EntitySet Name="Tarefas" EntityType="Self.Tarefa" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Projetos__UserId__4CA06362" Association="Self.FK__Projetos__UserId__4CA06362">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Projetos" EntitySet="Projetos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tarefas__ID_Proj__5165187F" Association="Self.FK__Tarefas__ID_Proj__5165187F">
+            <End Role="Projetos" EntitySet="Projetos" />
+            <End Role="Tarefas" EntitySet="Tarefas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tarefas__ID_Resp__52593CB8" Association="Self.FK__Tarefas__ID_Resp__52593CB8">
+            <End Role="Responsavel" EntitySet="Responsavels" />
+            <End Role="Tarefas" EntitySet="Tarefas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjetosnetModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Projetos">
+            <EntityTypeMapping TypeName="Projetos.netModel.Projeto">
+              <MappingFragment StoreEntitySet="Projetos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="dt_Criacao" ColumnName="dt_Criacao" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responsavels">
+            <EntityTypeMapping TypeName="Projetos.netModel.Responsavel">
+              <MappingFragment StoreEntitySet="Responsavel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Produto" ColumnName="Produto" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarefas">
+            <EntityTypeMapping TypeName="Projetos.netModel.Tarefa">
+              <MappingFragment StoreEntitySet="Tarefas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="dt_Cadastro" ColumnName="dt_Cadastro" />
+                <ScalarProperty Name="Imporancia" ColumnName="Imporancia" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ID_Projeto" ColumnName="ID_Projeto" />
+                <ScalarProperty Name="ID_Responsavel" ColumnName="ID_Responsavel" />
+                <ScalarProperty Name="dt_Ini_Prev" ColumnName="dt_Ini_Prev" />
+                <ScalarProperty Name="dt_Fim_Prev" ColumnName="dt_Fim_Prev" />
+                <ScalarProperty Name="dt_Ini" ColumnName="dt_Ini" />
+                <ScalarProperty Name="dt_Fim" ColumnName="dt_Fim" />
+                <ScalarProperty Name="Obs" ColumnName="Obs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Projetos.netModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UltimoLogin" ColumnName="UltimoLogin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

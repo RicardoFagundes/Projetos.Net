@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Responsavel]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Nome] VARCHAR(200) NOT NULL, 
+    [Produto] VARCHAR(150) NOT NULL, 
+    [Email] VARCHAR(150) NOT NULL
+)
